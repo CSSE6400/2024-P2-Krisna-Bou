@@ -14,18 +14,23 @@ POST {{baseUrl}}/api/v1/todos
 Content-Type: application/json
 
 {
-    "title": "Test Todo",
-    "description": "This is a test todo",
-    "completed": false
+    "id": 1,
+    "title": "Watch CSSE6400 Lecture",
+    "description": "Watch the CSSE6400 lecture on ECHO360 for week 1",
+    "completed": true,
+    "deadline_at": "2023-02-27T00:00:00",
+    "extra": "extra"
 }
 
 ### Update a Todo
 PUT {{baseUrl}}/api/v1/todos/1
 Content-Type: application/json
+
 {
     "title": "Updated Test Todo",
     "description": "This is an updated test todo",
-    "completed": false
+    "completed": true,
+    
 }
 
 ### Delete a Todo

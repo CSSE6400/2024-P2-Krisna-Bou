@@ -37,13 +37,16 @@ def get_todo(todo_id):
 
 @api.route('/todos', methods=['POST'])
 def create_todo():
+    content = request.json
     todo = Todo(
         title=request.json.get('title'),
         description=request.json.get('description'),
-        completed=request.json.get('completed', False),
+        completed=request.json.get('completed', False), 
     )
     if 'deadline_at' in request.json:
         todo.deadline_at = datetime.fromisoformat(request.json.get('deadline_at'))
+    if 'extra' in request.json:
+        return jsonify({'error': 'Invalid argument'}), 400
     # Adds a new record to the database or will update an existing record
     db.session.add(todo)
     # Commits the changes to the database, this must be called for the changes to be saved
@@ -59,6 +62,8 @@ def update_todo(todo_id):
     todo.description = request.json.get('description', todo.description)
     todo.completed = request.json.get('completed', todo.completed)
     todo.deadline_at = request.json.get('deadline_at', todo.deadline_at)
+    if 'extra' in request.json:
+        return jsonify({'error': 'Invalid argument'}), 400
     db.session.commit()
     return jsonify(todo.to_dict())
 
